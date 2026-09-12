@@ -1,5 +1,6 @@
 hl.config({
 	input = {
+		kb_options = "ctrl:swapcaps",
 		touchpad = {
 			natural_scroll = true,
 		},
