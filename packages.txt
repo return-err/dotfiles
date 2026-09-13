@@ -1,3 +1,4 @@
+alsa-utils
 base
 base-devel
 bluez
@@ -31,10 +32,12 @@ noto-fonts
 noto-fonts-cjk
 openssh
 otf-font-awesome
+pipewire-pulse
 slurp
 sudo
 swappy
 tlp
+ttf-jetbrains-mono-nerd
 unzip
 waybar
 wev

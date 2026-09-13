@@ -1,12 +1,63 @@
 {
-	"modules-left": [
-		"hyprland/workspaces"
-	],
+    "layer": "top",
+    "position": "top",
+    "height": 26,
+    "reload_style_on_change": true,
 
-	"modules-center": [
-		"clock"
-	],
-	"modules-right": [
-		"battery"
-	]
+    // 三段式佈局
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["cpu", "memory", "battery", "bluetooth", "network"],
+
+    // --- 模組詳細設定 ---
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "format": "{name}"
+    },
+
+    "hyprland/window": {
+        "format": "> {}",
+        "max-length": 30,
+        "separate-outputs": true
+    },
+
+    "clock": {
+        "interval": 1,
+        "format": "{:%m-%d %H:%M:%S}"
+    },
+
+    "cpu": {
+        "interval": 2,
+        "format": "CPU:{usage:>2}%"
+    },
+
+    "memory": {
+        "interval": 2,
+        "format": "RAM:{percentage:>2}%"
+    },
+
+    "battery": {
+        "format": "󰁹 {capacity}%"
+    },
+
+    "bluetooth": {
+        "format": "󰂯",
+        "format-disabled": "󰂲",
+        "format-connected": "",
+        "tooltip": true,
+		"tooltip-format": "{controller_alias}",
+		"tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "• {device_alias}"
+    },
+
+    "network": {
+        "format-wifi": "󰤨",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭",
+		"tooltip-format": "{ifname} via {gwaddr} 󰈀",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\nIP: {ipaddr}",
+        "tooltip-format-ethernet": "{ifname}\nIP: {ipaddr}",
+        "tooltip-format-disconnected": "Disconnected"
+    }
 }
