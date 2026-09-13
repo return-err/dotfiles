@@ -5,9 +5,9 @@
     "reload_style_on_change": true,
 
     // 三段式佈局
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-left": ["custom/power", "hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["cpu", "memory", "battery", "bluetooth", "network"],
+    "modules-right": ["tray", "cpu", "memory", "battery", "bluetooth", "network"],
 
     // --- 模組詳細設定 ---
 
@@ -16,16 +16,31 @@
         "format": "{name}"
     },
 
-    "hyprland/window": {
-        "format": "> {}",
-        "max-length": 30,
-        "separate-outputs": true
+	"custom/power": {
+        "format": "󰐥",
+        "tooltip": true,
+        "on-click": "systemctl poweroff",      // 左鍵直接關機
+        "on-click-right": "systemctl reboot"   // 右鍵重啟
     },
+
+    // "hyprland/window": {
+        // "format": "> {}",
+        // "separate-outputs": true,
+		// "rewrite": {
+			// 使用正則匹配：當長度超過 30 個字時，只保留最後 30 個字元，並在前面加上 "..."
+        	// "(.*)(.{30})$": "...$2"
+    	// }
+    // },
 
     "clock": {
         "interval": 1,
         "format": "{:%m-%d %H:%M:%S}"
     },
+
+	"tray": {
+		"icon-size": 16,
+		"spacing": 8
+	},
 
     "cpu": {
         "interval": 2,
@@ -44,7 +59,7 @@
     "bluetooth": {
         "format": "󰂯",
         "format-disabled": "󰂲",
-        "format-connected": "",
+        "format-connected": "󰂯{num_connections}",
         "tooltip": true,
 		"tooltip-format": "{controller_alias}",
 		"tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",

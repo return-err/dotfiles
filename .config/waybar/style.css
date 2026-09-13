@@ -1,65 +1,98 @@
-/* =========================
+/* ==========================================================================
    Global & Waybar Base
-   ========================= */
+   ========================================================================== */
 
 * {
-    border: none;
-    border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font", monospace;
-    font-size: 13px;
-    font-weight: 500;
-    min-height: 0;
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 0;
 }
 
 window#waybar {
-    background: transparent;
-    color: #ffffff;
+  background: transparent;
+  color: #ffffff;
 }
 
-/* =========================
-   Workspaces
-   ========================= */
+/* ==========================================================================
+   Left Modules
+   ========================================================================== */
+
+/* Power */
+#custom-power {
+  margin-left: 10px;
+  padding: 0 8px;
+  background: transparent;
+  color: #ffffff;
+}
+
+/* Workspaces */
+#workspaces {
+  padding: 0 4px;
+}
 
 #workspaces button {
-    padding: 0 6px;
-    margin: 0 2px;
-    color: #888888;                  /* 未選中時為中灰色 */
-    background: transparent;
+  margin: 0 2px;
+  padding: 0 6px;
+  background: transparent;
+  color: #888888;
 }
 
-#workspaces button.active {
-    color: #ffffff;                  /* 選中時為純白 */
-}
-
+#workspaces button.active,
 #workspaces button:hover {
-    color: #ffffff;
+  color: #ffffff;
 }
 
-/* =========================
-   Window Title
-   ========================= */
+/* ==========================================================================
+   Center Modules
+   ========================================================================== */
 
-#window {
-    padding: 0 10px;
-    color: #ffffff;
+#clock {
+  margin: 0;
+  padding: 0 8px;
+  background: transparent;
+  color: #ffffff;
 }
 
-/* =========================
-   System Modules (極簡無背景、全純白)
-   ========================= */
+/* ==========================================================================
+   Right Modules
+   ========================================================================== */
 
+#tray,
 #cpu,
 #memory,
-#battery,
-#bluetooth,
-#network,
-#clock {
-    padding: 0 8px;
-    margin: 0;
-    background: transparent;
-    color: #ffffff;
+#battery {
+  margin: 0;
+  padding: 0 8px;
+  background: transparent;
+  color: #ffffff;
+}
+#bluetooth {
+  margin: 0;
+  padding: 0 8px;
+  background: transparent;
+  color: #888888;
 }
 
+#bluetooth.connected {
+  color: #ffffff;
+}
+
+#network {
+  margin: 0;
+  padding: 0 8px;
+  background: transparent;
+  color: #ffffff;
+}
+
+/* 状态修饰 */
 #bluetooth.disabled {
-    color: #555555;                  /* 藍牙停用時為暗灰色 */
+  color: #555555;
+}
+
+/* 边缘留白 */
+#network {
+  margin-right: 10px;
 }
