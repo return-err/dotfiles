@@ -1,13 +1,13 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 26,
+    "height": 32,
     "reload_style_on_change": true,
 
     // 三段式佈局
-    "modules-left": ["custom/power", "hyprland/workspaces"],
+    "modules-left": ["custom/power", "cpu", "memory", "temperature", "hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "cpu", "memory", "battery", "bluetooth", "network"],
+    "modules-right": ["tray", "battery", "bluetooth", "network"],
 
     // --- 模組詳細設定 ---
 
@@ -17,23 +17,39 @@
     },
 
 	"custom/power": {
-        "format": "󰐥",
-        "tooltip": true,
-        "on-click": "systemctl poweroff",      // 左鍵直接關機
-        "on-click-right": "systemctl reboot"   // 右鍵重啟
+        "format": "󰣇",
+			"tooltip": false,
+			"menu": "on-click",
+			"menu-file": "~/.config/waybar/power_menu.xml",
+        	"menu-actions": {
+            	"shutdown": "shutdown",
+            	"reboot": "reboot",
+            	"suspend": "systemctl suspend",
+            	"hibernate": "systemctl hibernate"
+        	}
     },
 
-    // "hyprland/window": {
-        // "format": "> {}",
-        // "separate-outputs": true,
-		// "rewrite": {
-			// 使用正則匹配：當長度超過 30 個字時，只保留最後 30 個字元，並在前面加上 "..."
-        	// "(.*)(.{30})$": "...$2"
-    	// }
-    // },
+    "cpu": {
+        "interval": 2,
+        "format": "󰻠 {usage:>2}%"
+    },
+
+    "memory": {
+        "interval": 2,
+        "format": "󰍛 {percentage:>2}%"
+    },
+
+	"temperature": {
+		"interval": 2,
+		"hwmon-path": "/sys/class/hwmon/hwmon8/temp1_input",
+		"critical-threshold": 80,
+		"format-critical": "󰔄 {temperatureC}",
+		"format": "󰔄 {temperatureC}"
+	},
 
     "clock": {
         "interval": 1,
+		"tooltip": false,
         "format": "{:%m-%d %H:%M:%S}"
     },
 
@@ -42,37 +58,36 @@
 		"spacing": 8
 	},
 
-    "cpu": {
-        "interval": 2,
-        "format": "CPU:{usage:>2}%"
-    },
-
-    "memory": {
-        "interval": 2,
-        "format": "RAM:{percentage:>2}%"
-    },
-
-    "battery": {
-        "format": "󰁹 {capacity}%"
-    },
+	"battery": {
+		"format": "{icon} {capacity}%",
+		"format-icons": {
+			"default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+			"charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+		}
+	},
 
     "bluetooth": {
         "format": "󰂯",
         "format-disabled": "󰂲",
-        "format-connected": "󰂯{num_connections}",
+        "format-connected": "󰂱 {num_connections}",
         "tooltip": true,
 		"tooltip-format": "{controller_alias}",
 		"tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
-		"tooltip-format-enumerate-connected": "• {device_alias}"
+		"tooltip-format-enumerate-connected": "{device_alias}"
     },
 
-    "network": {
-        "format-wifi": "󰤨",
-        "format-ethernet": "󰈀",
-        "format-disconnected": "󰤭",
-		"tooltip-format": "{ifname} via {gwaddr} 󰈀",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%)\nIP: {ipaddr}",
-        "tooltip-format-ethernet": "{ifname}\nIP: {ipaddr}",
-        "tooltip-format-disconnected": "Disconnected"
-    }
+	"network": {
+        "interval": 10,
+		"format": "󰲛",
+		"format-wifi": "{icon}",
+		"format-icons":["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+		"format-ethernet": "󰈀",
+		"format-linked": "󰲝",
+		"format-disconnected": "󰲜",
+		"tooltip-format": "OFF",
+		"tooltip-format-wifi": "{essid} ({signalStrength}%)",
+		"tooltip-format-ethernet": "{ifname} 󰈀",
+		"tooltip-format-disconnected": "Disconnected",
+		"max-length": 50
+	}
 }
