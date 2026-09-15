@@ -1,98 +1,263 @@
-/* ==========================================================================
-   Global & Waybar Base
-   ========================================================================== */
+/* Waybar — 極簡 · 毛玻璃整合版 */
+
+@define-color glass        rgba(18, 18, 22, 0.60);
+@define-color glass-hover  rgba(255, 255, 255, 0.08);
+@define-color glass-active rgba(255, 255, 255, 0.15);
+@define-color line         rgba(255, 255, 255, 0.10);
+
+@define-color fg           #d8d8dc;
+@define-color fg-dim       #7d7d87;
+@define-color fg-bright    #ffffff;
+
+@define-color accent       #8ab4f8;
+@define-color warn         #e0af68;
+@define-color crit         #f7768e;
 
 * {
-  border: none;
-  border-radius: 0;
-  font-family: JetBrainsMono Nerd Font;
-  font-size: 13px;
-  font-weight: 500;
-  min-height: 0;
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK TC", "Noto Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    min-height: 0;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
 }
 
 window#waybar {
-  background: transparent;
-  color: #ffffff;
+    background: @glass;
+    color: @fg;
+    border-radius: 0;
+    border-bottom: 1px solid @line;
+    transition: background-color 0.2s ease;
 }
 
-/* ==========================================================================
-   Left Modules
-   ========================================================================== */
-
-/* Power */
-#custom-power {
-  margin-left: 10px;
-  padding: 0 8px;
-  background: transparent;
-  color: #ffffff;
-}
-
-/* Workspaces */
-#workspaces {
-  padding: 0 4px;
-}
-
-#workspaces button {
-  margin: 0 2px;
-  padding: 0 6px;
-  background: transparent;
-  color: #888888;
-}
-
-#workspaces button.active,
-#workspaces button:hover {
-  color: #ffffff;
-}
-
-/* ==========================================================================
-   Center Modules
-   ========================================================================== */
-
-#clock {
-  margin: 0;
-  padding: 0 8px;
-  background: transparent;
-  color: #ffffff;
-}
-
-/* ==========================================================================
-   Right Modules
-   ========================================================================== */
-
-#tray,
+#custom-power,
 #cpu,
 #memory,
-#battery {
-  margin: 0;
-  padding: 0 8px;
-  background: transparent;
-  color: #ffffff;
-}
-#bluetooth {
-  margin: 0;
-  padding: 0 8px;
-  background: transparent;
-  color: #888888;
-}
-
-#bluetooth.connected {
-  color: #ffffff;
-}
-
+#temperature,
+#hyprland-workspaces,
+#workspaces,
+#clock,
+#backlight,
+#backlight-slider,
+#pulseaudio,
+#pulseaudio-slider,
+#tray,
+#battery,
+#bluetooth,
 #network {
-  margin: 0;
-  padding: 0 8px;
-  background: transparent;
-  color: #ffffff;
+    background: transparent;
+    border-radius: 0;
+    padding: 0 9px;
+    margin: 3px 0;
+    color: @fg;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 状态修饰 */
-#bluetooth.disabled {
-  color: #555555;
+/* 模組 Hover 懸停效果 */
+#cpu:hover,
+#memory:hover,
+#temperature:hover,
+#clock:hover,
+#backlight:hover,
+#pulseaudio:hover,
+#battery:hover,
+#bluetooth:hover,
+#network:hover {
+    background: @glass-hover;
+    color: @fg-bright;
+    border-radius: 3px;
 }
 
-/* 边缘留白 */
-#network {
-  margin-right: 10px;
+/* 電源按鈕 */
+#custom-power {
+    color: @crit;
+    padding: 0 11px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#custom-power:hover {
+    background: rgba(247, 118, 142, 0.15);
+    color: @crit;
+    border-radius: 3px;
+}
+
+/* CPU / RAM / 溫度 */
+#temperature.critical {
+    color: @crit;
+    font-weight: bold;
+}
+
+/* 工作區 (相容 #workspaces 與 #hyprland-workspaces) */
+#hyprland-workspaces,
+#workspaces {
+    padding: 0 2px;
+}
+
+#hyprland-workspaces button,
+#workspaces button {
+    background: transparent;
+    color: @fg-dim;
+    padding: 0 9px;
+    margin: 3px 1px;
+    border-radius: 3px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+#hyprland-workspaces button:hover,
+#workspaces button:hover {
+    background: @glass-hover;
+    color: @fg-bright;
+}
+
+/* 當前活動工作區（結合高亮背景與底部 Accent 指示線） */
+#hyprland-workspaces button.active,
+#workspaces button.active {
+    background: @glass-active;
+    color: @fg-bright;
+    border-bottom: 2px solid @accent;
+    box-shadow: inset 0 -2px 0 @accent;
+}
+
+#hyprland-workspaces button.urgent,
+#workspaces button.urgent {
+    background: @crit;
+    color: #111114;
+}
+
+/* 時鐘 */
+#clock {
+    color: @fg-bright;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* 音量與亮度模組 */
+#pulseaudio.muted {
+    color: @fg-dim;
+}
+
+/* Slider 滑桿 */
+#backlight-slider,
+#pulseaudio-slider {
+    padding: 0 6px;
+}
+
+#backlight-slider slider,
+#pulseaudio-slider slider {
+    min-width: 0;
+    min-height: 0;
+    opacity: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+#backlight-slider trough,
+#pulseaudio-slider trough {
+    min-width: 60px;
+    min-height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+#backlight-slider highlight {
+    border-radius: 2px;
+    background: @accent;
+}
+
+#pulseaudio-slider highlight {
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.65);
+}
+
+/* 系統託盤 */
+#tray {
+    padding: 0 8px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: @glass-hover;
+    border-radius: 3px;
+}
+
+/* 電池 */
+#battery.charging,
+#battery.plugged {
+    color: @accent;
+}
+
+#battery.warning:not(.charging) {
+    color: @warn;
+}
+
+#battery.critical:not(.charging) {
+    color: @crit;
+    animation: smooth-blink 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes smooth-blink {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1.0;
+        color: @crit;
+    }
+}
+
+/* 網路 / 藍牙 */
+#bluetooth.disabled,
+#bluetooth.off,
+#network.disconnected,
+#network.disabled {
+    color: @fg-dim;
+}
+
+#bluetooth.connected,
+#network.ethernet,
+#network.wifi,
+#network.linked {
+    color: @accent;
+}
+
+/* 右鍵 / 點擊彈出選單（Menu）毛玻璃樣式 */
+menu {
+    background: rgba(18, 18, 22, 0.88);
+    border: 1px solid @line;
+    border-radius: 8px;
+    color: @fg;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+menuitem {
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+}
+
+menuitem:hover {
+    background: @glass-hover;
+    color: @fg-bright;
+}
+
+/* 提示框 (Tooltip) */
+tooltip {
+    background: rgba(18, 18, 22, 0.88);
+    border: 1px solid @line;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+tooltip label {
+    color: @fg;
+    padding: 4px 8px;
 }
